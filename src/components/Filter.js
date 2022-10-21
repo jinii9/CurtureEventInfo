@@ -1,7 +1,28 @@
 import React,{ useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useDispatch } from "react-redux";
+import { BasketAction } from '../reducers/myPageReducer';
 
 function FilterItem ({item}) {
+    const dispatch = useDispatch();
+
+    const goAction = (item) => {
+        console.log('클릭')
+        console.log(item)
+
+        dispatch(
+            BasketAction({
+                GUNAME: item.GUNAME,
+                CODENAME: item.CODENAME,
+                DATE: item.DATE,
+                TITLE: item.TITLE,
+                MAIN_IMG: item.MAIN_IMG,
+            }),
+        );
+        // localStorage부분
+
+    }
+
     return (
         <>
             <ItemWrap>
@@ -9,6 +30,9 @@ function FilterItem ({item}) {
                     <ItemImg>
                         <img src={item.MAIN_IMG} />
                         <ItemCodeName>{item.CODENAME}</ItemCodeName>
+                        <Basket type="button" onClick={() => goAction(item)}>
+                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDUiIGhlaWdodD0iNDUiIHZpZXdCb3g9IjAgMCA0NSA0NSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGNpcmNsZSBmaWxsPSIjMkEwMDM4IiBvcGFjaXR5PSIuNSIgY3g9IjIyLjUiIGN5PSIyMi41IiByPSIyMi41Ii8+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTEuMDMgMTQuMzgpIiBzdHJva2U9IiNGRkYiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogICAgICAgICAgICA8cGF0aCBzdHJva2Utd2lkdGg9IjEuNCIgZD0ibTIwLjQ2IDIuOTEtMi4xNyA5LjIzSDUuODdMMy43MSAyLjkxeiIvPgogICAgICAgICAgICA8Y2lyY2xlIHN0cm9rZS13aWR0aD0iMS4yIiBjeD0iMTYuMzUiIGN5PSIxNi44NiIgcj0iMS43Ii8+CiAgICAgICAgICAgIDxjaXJjbGUgc3Ryb2tlLXdpZHRoPSIxLjIiIGN4PSI3LjgyIiBjeT0iMTYuODYiIHI9IjEuNyIvPgogICAgICAgICAgICA8cGF0aCBzdHJva2Utd2lkdGg9IjEuNCIgZD0iTTAgMGgzLjAybDEuNDEgNS45OCIvPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+Cg==" alt="장바구니 아이콘" />
+                        </Basket>
                     </ItemImg>
                     <ItemTitle>{item.TITLE}</ItemTitle>
                     <ItemDate>{item.DATE}</ItemDate>
@@ -202,6 +226,11 @@ const ItemWrap = styled.div`
     align-items: center;
     padding: 1.6rem;
     /* justify-content: center; */
+
+    &:hover {
+        transform: scale(1.06);
+        transition: .5s;
+    }
 `;
 const ItemInfo = styled.div`
     margin-top: 2rem;
@@ -228,6 +257,22 @@ const ItemCodeName = styled.div`
     color: white;
     background-color: rgb(10,129,129);
 `;
+const Basket = styled.button`
+    position: absolute;
+    width: 8rem;
+    height: 8rem;
+    right: 0rem;
+    bottom: 0rem;
+    margin: 4rem 1rem;
+    z-index: 200;
+    background-color:transparent;
+    border: none;
+    & img {
+        width: 100%;
+        height: 100%;
+    }
+`;
+
 const ItemTitle = styled.div`
     font-size: 2.5rem;
     font-weight: bold;
