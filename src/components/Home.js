@@ -7,23 +7,25 @@ import styled, { createGlobalStyle }  from 'styled-components';
 import Slider from "react-slick";
 import './slick-carousel/slick/slick.css';
 import './slick-carousel/slick/slick-theme.css';
+// import Test from './Test';
 
 
 function Slide ({APIData}) {
-        // 슬라이드 셋팅
-        const settings = {
-            className: "",
-            dots: true,
-            infinite: true,
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            adaptiveHeight: true
-        };   
+    // 슬라이드 셋팅
+    const settings = {
+        className: "",
+        dots: true,
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        adaptiveHeight: true
+    }; 
+    // console.log("슬라이드")
     return (
         <Slider {...settings}>
-            {APIData.map((data,index) => ( 
-                <>
-                    <SlideImg key={index}>
+            {APIData.map((data, index) => ( 
+                <div key={index}>
+                    <SlideImg>
                         <img src={data.MAIN_IMG}/>
                     </SlideImg>
                     <Info>
@@ -33,21 +35,25 @@ function Slide ({APIData}) {
                         <li>{data.PLACE}</li>
                         </ul>
                     </Info>
-                </>
+                </div>
+                
             ))}
         </Slider>
     )
 }
 
+
 const Home = () => {
+    // console.log("HomeHome")
     const [APIData, setAPIData] = useState();
     const [asnycCheck, setAsyncCheck] = useState(false);
     // OpenAPI 데이터
     useEffect(() => {
+        // console.log("APIData");
         const fetchData = async () => {
             try {
                 const url =
-                    "http://openapi.seoul.go.kr:8088/584c7473636a696e35324d6a696a59/json/culturalEventInfo/1/15";
+                    "http://openapi.seoul.go.kr:8088/584c7473636a696e35324d6a696a59/json/culturalEventInfo/1/50";
 
                 const res = await axios({
                     method: "get",
@@ -83,31 +89,17 @@ const Home = () => {
                         </ul>
                     </Nav>
                     
-                    {/* <Slider {...settings}>
-                        {APIData.map((data,index) => ( 
-                            <>
-                                <SlideImg key={index}>
-                                    <img src={data.MAIN_IMG}/>
-                                </SlideImg>
-                                <Info>
-                                    <ul>
-                                    <li><InfoItem>{data.TITLE}</InfoItem></li>
-                                    <li>{data.DATE}</li>
-                                    <li>{data.PLACE}</li>
-                                    </ul>
-                                </Info>
-                            </>
-                        ))}
-                    </Slider> */}
                     {asnycCheck && (<Slide APIData={APIData}/>)}
-                    {/* <Slide APIData={APIData}/> */}
                 </NavWrap>
             
                 <Section>
-                    {/* <FilterWrap> */}
-                            <Filter />
-                    {/* </FilterWrap> */}
+                        {/* <Test/> */}
+                       {/* <Filter asnycCheck={asnycCheck} APIData={APIData}/> */}
+                       {asnycCheck && (<Filter asnycCheck={asnycCheck} APIData={APIData}/>)}
+                       {/* <Test/> */}
 
+                       {/* <Test/> */}
+                        {/* <Test/> */}
                     {/* 필터된 리스트들 */}
                 </Section>
 
